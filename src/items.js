@@ -42,8 +42,7 @@ const updateItem = (req, res, id) => {
         res.writeHead(404, {"Content-Type": "application/json"});
         res.end('{"message": "Item with ID not found!"}');
       }
-      const objIndex = items.findIndex((obj => obj.id == id));
-      items[objIndex].name = body.name;
+      item.name = body.name;
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end('{"message": "Item updated."}');
     });
@@ -74,21 +73,16 @@ const postItem = (req, res) => {
 };
 
 const deleteItem = (res, id) => {
-  console.log("deleteItem", id);
   const item = items.find((el) => el.id == id);
-  if (item) {
-    res.writeHead(204, { "Content-Type": "application/json" });
-    for (let i = 0; i < items.length; i++) {
-      if (items[i].id === id) {
-        items.splice(i, 1);
-        break;
-      }
-    }
-    res.end(`{"message": "Item with the ID of ${id} successfully deleted."}`);
-  } else {
+  if (!item) {
     res.writeHead(404, { "Content-Type": "application/json" });
     res.end('{"message": "Item not found!"}');
   }
+  console.log("deleteItem", id);
+  const index = items.indexOf(item);
+  items.splice(index, 1);
+  res.writeHead(204, { "Content-Type": "application/json" });
+  res.end('{"message": "Item deleted."}');
 };
 
 export { getItems, getItemsById, updateItem, postItem, deleteItem };

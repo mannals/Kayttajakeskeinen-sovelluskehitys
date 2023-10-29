@@ -30,4 +30,4 @@ content-type: application/json
 
 ### DELETE
 
-DELETE http://localhost:3000/items/20
+DELETE http://localhost:3000/items/6

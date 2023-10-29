@@ -21,6 +21,13 @@ content-type: application/json
 {"name": "kurkku"}
 
 
+### PUT 
+
+PUT http://localhost:3000/items/20
+content-type: application/json
+
+{"name": "tomaatti"}
+
 ### DELETE
 
-DELETE http://localhost:3000/items/5
+DELETE http://localhost:3000/items/20

@@ -6,28 +6,34 @@ GET http://localhost:3000/
 
 ### GET /items
 
-GET http://localhost:3000/items
+GET http://localhost:3000/books
 
 
 ### GET items/:id
 
-GET http://localhost:3000/items/20
+GET http://localhost:3000/books/13
 
 ### POST
 
-POST http://localhost:3000/items/
+POST http://localhost:3000/books/
 content-type: application/json
 
-{"name": "kurkku"}
+{
+    "name": "The Power and the Glory",
+    "author": "Graham Greene",
+    "language": "English",
+    "pages": 222,
+    "status": "want to read"
+}
 
 
 ### PUT 
 
-PUT http://localhost:3000/items/20
+PUT http://localhost:3000/books/12
 content-type: application/json
 
-{"name": "tomaatti"}
+{"status": "read"}
 
 ### DELETE
 
-DELETE http://localhost:3000/items/6
+DELETE http://localhost:3000/books/6

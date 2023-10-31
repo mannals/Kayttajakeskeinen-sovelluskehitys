@@ -1,0 +1,123 @@
+{
+        "books": [{
+            "id": 1,
+            "name": "Sinuhe Egyptiläinen",
+            "author": "Mika Waltari",
+            "language": "Finnish",
+            "pages": 786,
+            "status": "read"
+        },
+        {
+            "id": 2,
+            "name": "Rikos ja Rangaistus",
+            "author": "Fyodor Dostoevsky",
+            "language": "Finnish",
+            "pages": 636,
+            "status": "read"
+        },
+        {
+            "id": 3,
+            "name": "Ruusunen",
+            "author": "Rauha S. Virtanen",
+            "language": "Finnish",
+            "pages": 268,
+            "status": "read"
+        },
+        {
+            "id": 4,
+            "name": "Linnunrata",
+            "author": "Douglas Adams",
+            "language": "Finnish",
+            "pages": 798,
+            "status": "read"
+        },
+        {
+            "id": 5,
+            "name": "Matkalla",
+            "author": "Jack Kerouac",
+            "language": "Finnish",
+            "pages": 353,
+            "status": "read"
+        },
+        {
+            "id": 6,
+            "name": "Häräntappoase",
+            "author": "Anna-Leena Härkönen",
+            "language": "Finnish",
+            "pages": 316,
+            "status": "read"
+        },
+        {
+            "id": 7,
+            "name": "Dr Jekyll and Mr Hyde",
+            "author": "R. L. Stevenson",
+            "language": "English",
+            "pages": 62,
+            "status": "read"
+        },
+        {
+            "id": 8,
+            "name": "Flowers for Algernon",
+            "author": "Daniel Keyes",
+            "language": "English",
+            "pages": 198,
+            "status": "read"
+        },
+        {
+            "id": 9,
+            "name": "Animal Farm",
+            "author": "George Orwell",
+            "language": "English",
+            "pages": 131,
+            "status": "read"
+        },
+        {
+            "id": 10,
+            "name": "One, None and a Hundred Thousand",
+            "author": "Luigi Pirandello",
+            "language": "English",
+            "pages": 268,
+            "status": "read"
+        },
+        {
+            "id": 11,
+            "name": "The Catcher in the Rye",
+            "author": "J.D. Salinger",
+            "language": "English",
+            "pages": 234,
+            "status": "read"
+        },
+        {
+            "id": 12,
+            "name": "The Three-Body Problem",
+            "author": "Cixin Liu",
+            "language": "English",
+            "pages": 472,
+            "status": "currently reading"
+        },
+        {
+            "id": 13,
+            "name": "Kun kyyhkyset katosivat",
+            "author": "Sofi Oksanen",
+            "language": "Finnish",
+            "pages": 361,
+            "status": "currently reading"
+        },
+        {
+            "id": 14,
+            "name": "The Name of the Rose",
+            "author": "Umberto Eco",
+            "language": "English",
+            "pages": 536,
+            "status":"want to read"
+        },
+        {
+            "id": 15,
+            "name": "The Bell Jar",
+            "author": "Sylvia Plath",
+            "language": "English",
+            "pages": 294,
+            "status":"want to read"
+        }
+    ]   
+}

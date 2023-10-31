@@ -1,25 +1,23 @@
-let items = [
-  { id: 5, name: "porkkana" },
-  { id: 6, name: "omena" },
-  { id: 19, name: "appelsiini" },
-];
+import bookJson from "./books.json" assert {type: 'json'};
+
+const books = bookJson.books;
 
 const getItems = (res) => {
   res.writeHead(200, { "Content-Type": "application/json" });
-  const jsonItems = JSON.stringify(items);
-  res.end(`{"message": "All items", "items": ${jsonItems}}`);
+  const booksString = JSON.stringify(books);
+  res.end(`{"message": "All items", "items": ${booksString}}`);
 };
 
 const getItemsById = (res, id) => {
   // TODO: if item with id exists send it, otherwise 404
   console.log("getItemsById", id);
-  const item = items.find((element) => element.id == id);
-  if (item) {
+  const book = books.find((element) => element.id == id);
+  if (book) {
     res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(item));
+    res.end(JSON.stringify(book));
   } else {
     res.writeHead(404, { "Content-Type": "application/json" });
-    res.end('{"message": "Item not found!"}');
+    res.end('{"message": "Book not found!"}');
   }
 };
 
@@ -37,14 +35,14 @@ const updateItem = (req, res, id) => {
       body = Buffer.concat(body).toString();
       console.log("req body", body);
       body = JSON.parse(body);
-      const item = items.find((element) => element.id == id);
-      if (!item) {
+      const book = books.find((element) => element.id == id);
+      if (!book) {
         res.writeHead(404, {"Content-Type": "application/json"});
-        res.end('{"message": "Item with ID not found!"}');
+        res.end('{"message": "Book with ID not found!"}');
       }
-      item.name = body.name;
+      book.status = body.status;
       res.writeHead(200, { "Content-Type": "application/json" });
-      res.end('{"message": "Item updated."}');
+      res.end('{"message": "Book updated."}');
     });
 }
 
@@ -61,28 +59,28 @@ const postItem = (req, res) => {
       body = Buffer.concat(body).toString();
       console.log("req body", body);
       body = JSON.parse(body);
-      if (!body.name) {
+      if (!body.name || !body.author || !body.language || !body.pages || !body.status) {
         res.writeHead(400, { "Content-Type": "application/json" });
         res.end('{"message": "Missing data!"}');
       }
-      const newId = items[items.length - 1].id + 1;
-      items.push({ id: newId, name: body.name });
+      const newId = books[books.length - 1].id + 1;
+      books.push({ id: newId, name: body.name, author: body.author, language: body.language, pages: body.pages, status: body.status });
       res.writeHead(201, { "Content-Type": "application/json" });
-      res.end('{"message": "New item added."}');
+      res.end('{"message": "New book added."}');
     });
 };
 
 const deleteItem = (res, id) => {
-  const item = items.find((el) => el.id == id);
-  if (!item) {
+  const book = books.find((el) => el.id == id);
+  if (!book) {
     res.writeHead(404, { "Content-Type": "application/json" });
-    res.end('{"message": "Item not found!"}');
+    res.end('{"message": "Book not found!"}');
   }
   console.log("deleteItem", id);
-  const index = items.indexOf(item);
-  items.splice(index, 1);
+  const index = books.indexOf(book);
+  books.splice(index, 1);
   res.writeHead(204, { "Content-Type": "application/json" });
-  res.end('{"message": "Item deleted."}');
+  res.end('{"message": "Book deleted."}');
 };
 
 export { getItems, getItemsById, updateItem, postItem, deleteItem };

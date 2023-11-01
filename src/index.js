@@ -1,50 +1,36 @@
-import http from 'http';
-import fs from 'fs/promises';
-import {getItems, getItemsById, updateItem, postItem, deleteItem} from './items.js';
+import express from 'express';
+import path from 'path';
+import {fileURLToPath} from 'url';
+import { getItems, getItemsById, postItem } from './items.js';
 
 const hostname = '127.0.0.1';
+const app = express();
 const port = 3000;
-let indexFile;
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const server = http.createServer((req, res) => {
-  console.log('request', req.method, req.url);
+app.use('/docs', express.static(path.join(__dirname, '../docs')));
+app.use(express.json());
 
-  const {method, url} = req;
-  const reqParts = url.split('/');
-
-  if (method === 'GET' && url === '/') {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end(indexFile);
-  } else if (method === 'GET' && reqParts[1] === 'books' && url.split('/')[2]) {
-    console.log('GETting book with ID', reqParts[2]);
-    getItemsById(res, reqParts[2]);
-  } else if (method === 'GET' && reqParts[1] == 'books') {
-    console.log('GETting books');
-    getItems(res);
-  } else if (method === 'POST') {
-    console.log('Posting..');
-    postItem(req, res);
-  } else if (method === 'DELETE') {
-    console.log('Deleting book with ID', reqParts[2]);
-    deleteItem(res, reqParts[2]);
-  } else if (method === 'PUT' ) {
-    console.log('Updating book with ID', reqParts[2]);
-    updateItem(req, res, reqParts[2]);
-  } else {
-    res.writeHead(404, {'Content-Type': 'application/json'});
-    res.end('{"message": "404 resource not found!"}');
-  }
+app.get('/', (req, res) => {
+  res.send('Welcome to my REST API!');
 });
+// get all
+app.get('/api/books', getItems);
 
-fs.readFile("./src/index.html")
-    .then(contents => {
-        indexFile = contents;
-        server.listen(port, hostname, () => {
-            console.log(`Server is running on http://${hostname}:${port}`);
-        });
-    })
-    .catch(err => {
-        console.error(`Could not read index.html file: ${err}`);
-        process.exit(1);
-    });
+// get by id
+app.get('/api/books/:id', getItemsById);
+
+// modify
+app.put('/api/books');
+
+// add new item
+app.post('/api/books', postItem);
+
+// remove
+app.delete('/api/books');
+
+app.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
+});

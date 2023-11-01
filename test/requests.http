@@ -1,4 +1,5 @@
 
+
 ### GET /
 
 GET http://localhost:3000/
@@ -6,16 +7,16 @@ GET http://localhost:3000/
 
 ### GET /items
 
-GET http://localhost:3000/books
+GET http://localhost:3000/api/books
 
 
 ### GET items/:id
 
-GET http://localhost:3000/books/13
+GET http://localhost:3000/api/books/13
 
 ### POST
 
-POST http://localhost:3000/books/
+POST http://localhost:3000/api/books/
 content-type: application/json
 
 {
@@ -29,11 +30,11 @@ content-type: application/json
 
 ### PUT 
 
-PUT http://localhost:3000/books/12
+PUT http://localhost:3000/api/books/12
 content-type: application/json
 
 {"status": "read"}
 
 ### DELETE
 
-DELETE http://localhost:3000/books/6
+DELETE http://localhost:3000/api/books/6

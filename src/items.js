@@ -2,23 +2,21 @@ import bookJson from "./books.json" assert {type: 'json'};
 
 const books = bookJson.books;
 
-const getItems = (res) => {
-  res.writeHead(200, { "Content-Type": "application/json" });
+const getItems = (req, res) => {
   const booksString = JSON.stringify(books);
-  res.end(`{"message": "All items", "items": ${booksString}}`);
+res.json(books);
 };
 
-const getItemsById = (res, id) => {
+const getItemsById = (req, res) => {
   // TODO: if item with id exists send it, otherwise 404
-  console.log("getItemsById", id);
-  const book = books.find((element) => element.id == id);
+  console.log("getItemsById", req.params);
+  const book = books.find((element) => element.id == req.params.id);
   if (book) {
-    res.writeHead(200, { "Content-Type": "application/json" });
-    res.end(JSON.stringify(book));
+    res.json(book);
   } else {
-    res.writeHead(404, { "Content-Type": "application/json" });
-    res.end('{"message": "Book not found!"}');
-  }
+    res.status(404);
+    res.json({message: "Book not found."})
+  };
 };
 
 const updateItem = (req, res, id) => {
@@ -47,27 +45,12 @@ const updateItem = (req, res, id) => {
 }
 
 const postItem = (req, res) => {
-  let body = [];
-  req
-    .on("error", (err) => {
-      console.error(err);
-    })
-    .on("data", (chunk) => {
-      body.push(chunk);
-    })
-    .on("end", () => {
-      body = Buffer.concat(body).toString();
-      console.log("req body", body);
-      body = JSON.parse(body);
-      if (!body.name || !body.author || !body.language || !body.pages || !body.status) {
-        res.writeHead(400, { "Content-Type": "application/json" });
-        res.end('{"message": "Missing data!"}');
-      }
-      const newId = books[books.length - 1].id + 1;
-      books.push({ id: newId, name: body.name, author: body.author, language: body.language, pages: body.pages, status: body.status });
-      res.writeHead(201, { "Content-Type": "application/json" });
-      res.end('{"message": "New book added."}');
-    });
+  console.log('new item posted', req.body);
+  const newId = books[books.length - 1].id + 1;
+  if (req.body.name && req.body.author && req.body.language && req.body.pages && req.body.status) {
+    books.push({id: newId, name: req.body.name, author: req.body.author, language: req.body.language, pages: req.body.pages, status: req.body.status});
+    res.sendStatus(201);
+  }
 };
 
 const deleteItem = (res, id) => {

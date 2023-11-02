@@ -5,36 +5,39 @@
 GET http://localhost:3000/
 
 
-### GET /items
+### GET /api/media
 
-GET http://localhost:3000/api/books
+GET http://localhost:3000/api/media
 
 
-### GET items/:id
+### GET /api/media/:id
 
-GET http://localhost:3000/api/books/13
+GET http://localhost:3000/api/media/9592
 
 ### POST
 
-POST http://localhost:3000/api/books/
+POST http://localhost:3000/api/media
 content-type: application/json
 
 {
-    "name": "The Power and the Glory",
-    "author": "Graham Greene",
-    "language": "English",
-    "pages": 222,
-    "status": "want to read"
+  "filename": "60ac.jpg",
+  "title": "New image",
+  "description": "The description of the new image",
+  "user_id": 305,
+  "media_type": "image/jpeg"
 }
 
 
 ### PUT 
 
-PUT http://localhost:3000/api/books/12
+PUT http://localhost:3000/api/media/9590
 content-type: application/json
 
-{"status": "read"}
+{
+  "title": "Basement modified",
+  "description": "Some new description"
+}
 
 ### DELETE
 
-DELETE http://localhost:3000/api/books/6
+DELETE http://localhost:3000/api/media/

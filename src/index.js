@@ -15,6 +15,7 @@ app.set('views', 'src/views');
 
 app.use('/docs', express.static(path.join(__dirname, '../docs')));
 app.use(express.json());
+app.use(express.static('media'))
 
 app.use((req, res, next) => {
   console.log('Time: ', Date.now(), req.method, req.url);
@@ -35,7 +36,7 @@ app.get('/:message', (req, res) => {
 app.get('/api/media', getItems);
 
 // get by id
-app.get('/api/media/:media_id', getItemsById);
+app.get('/api/media/:id', getItemsById);
 
 // modify
 app.put('/api/media/:media_id', updateItem);

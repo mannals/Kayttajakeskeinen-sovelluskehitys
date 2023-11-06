@@ -8,13 +8,7 @@ const media = mediaJson.media;
  * @param {*} res - http response
  */
 const getItems = (req, res) => {
-  const limit = req.query.language;
-  // TODO: check that the value is valid
-  if (limit) {
-    res.json(media.filter((medium) => medium.language === limit));
-  } else {
-    res.json(media);
-  }
+  res.json(media);
 };
 
 /**
@@ -47,6 +41,7 @@ const updateItem = (req, res) => {
     if (req.body.description) medium.description = req.body.description;
     res.sendStatus(201);
   } else {
+    res.writeHead(400, { "Content-Type": "application/json" });
     res.end('{"message": "Couldn`t update media item!"}');
   }
 }
@@ -58,9 +53,10 @@ const updateItem = (req, res) => {
  */
 const postItem = (req, res) => {
   console.log('new item posted', req.body);
-  const newId = media[media.length-1].media_id + 1;
+  const newId = Math.floor(Math.random() * (9999 - 1000) + 1000);
+  const now = new Date();
   if (req.body.filename && req.body.title && req.body.description && req.body.user_id && req.body.media_type) {
-    media.push({media_id: newId, filename: req.body.filename, title: req.body.title, description: req.body.description, user_id: req.body.user_id, media_type: req.body.media_type});
+    media.push({media_id: newId, filename: req.body.filename, title: req.body.title, description: req.body.description, user_id: req.body.user_id, media_type: req.body.media_type, created_at: now.toISOString()});
     res.sendStatus(201);
   } else {
     res.sendStatus(401);

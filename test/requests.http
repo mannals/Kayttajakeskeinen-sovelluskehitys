@@ -40,4 +40,4 @@ content-type: application/json
 
 ### DELETE
 
-DELETE http://localhost:3000/api/media/
+DELETE http://localhost:3000/api/media/9632

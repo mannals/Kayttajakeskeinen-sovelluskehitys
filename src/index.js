@@ -15,7 +15,9 @@ app.set('views', 'src/views');
 
 app.use('/docs', express.static(path.join(__dirname, '../docs')));
 app.use(express.json());
-app.use(express.static('media'))
+
+// with this, you can add /api/media/[filename] to the url and it will serve the picture
+app.use('/api/media', express.static(path.join(__dirname, '/media')))
 
 app.use((req, res, next) => {
   console.log('Time: ', Date.now(), req.method, req.url);
@@ -45,7 +47,7 @@ app.put('/api/media/:media_id', updateItem);
 app.post('/api/media', postItem);
 
 // remove
-app.delete('/api/media', deleteItem);
+app.delete('/api/media/:media_id', deleteItem);
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

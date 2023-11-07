@@ -3,7 +3,7 @@ import mediaJson from "./media.json" assert {type: 'json'};
 const media = mediaJson.media;
 
 /**
- * GET all books
+ * GET all media
  * @param {*} req - http request
  * @param {*} res - http response
  */
@@ -12,7 +12,7 @@ const getItems = (req, res) => {
 };
 
 /**
- * GET book by ID
+ * GET media by ID
  * @param {*} req - http request
  * @param {*} res - http response
  */
@@ -28,7 +28,7 @@ const getItemsById = (req, res) => {
 };
 
 /**
- * PUT new value to existing book
+ * PUT new value to existing media
  * @param {*} req - http request
  * @param {*} res - http response
  */
@@ -46,7 +46,7 @@ const updateItem = (req, res) => {
 }
 
 /**
- * POST new book
+ * POST new media
  * @param {*} req - http request
  * @param {*} res - http response
  */
@@ -64,7 +64,7 @@ const postItem = (req, res) => {
 };
 
 /**
- * DELETE book
+ * DELETE media
  * @param {*} req - http request
  * @param {*} res - http response
  */

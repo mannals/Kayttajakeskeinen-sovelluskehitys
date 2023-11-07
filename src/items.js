@@ -3,7 +3,7 @@ import mediaJson from "./media.json" assert {type: 'json'};
 const media = mediaJson.media;
 
 /**
- * GET all books (if query includes requirements, all books fulfilling it)
+ * GET all books
  * @param {*} req - http request
  * @param {*} res - http response
  */
@@ -17,7 +17,6 @@ const getItems = (req, res) => {
  * @param {*} res - http response
  */
 const getItemsById = (req, res) => {
-  // TODO: if item with id exists send it, otherwise 404
   console.log("getItemsById", req.params);
   const medium = media.find((element) => element.media_id == req.params.id);
   if (medium) {

@@ -1,1 +1,1 @@
-Exercise 2 (express branch): Getting started with Express framework
+Created SQL file for relational databases

@@ -3,6 +3,7 @@ import path from 'path';
 import {fileURLToPath} from 'url';
 import mediaRouter from './routers/mediaRouter.mjs';
 import userRouter from './routers/userRouter.mjs';
+import likeRouter from './routers/likeRouter.mjs';
 import { logger } from './middlewares/middlewares.mjs';
 
 const hostname = '127.0.0.1';
@@ -39,6 +40,7 @@ app.get('/:message', (req, res) => {
 
 app.use('/api/media', mediaRouter);
 app.use('/api/users', userRouter);
+app.use('/api/likes', likeRouter);
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

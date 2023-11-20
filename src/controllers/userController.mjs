@@ -21,9 +21,9 @@ const getUserById = async (req, res) => {
 };
 
 const postUser = async (req, res) => {
-    const {username, password, email, user_level_id} = req.body;
-    if (username && password && email && user_level_id) {
-        const result = await addUser({username, password, email, user_level_id});
+    const {username, password, email} = req.body;
+    if (username && password && email) {
+        const result = await addUser({username, password, email});
         if (result.user_id) {
             res.status(201);
             res.json({message: 'New user added.', ...result});
@@ -54,9 +54,14 @@ const putUser = async (req, res) => {
 };
 
 const deleteUser = async (req, res) => {
-    const result = await removeUser(req.params.id);
-    if (result) {
-        res.json({message: "User deleted successfully"});
+    const user = await findUserById(req.params.id);
+    if (user) {
+        const result = await removeUser(req.params.id);
+        if (result) {
+            res.json({message: "User deleted successfully"});
+        } else {
+        res.status(404);
+        }
     } else {
         res.sendStatus(404);
     }

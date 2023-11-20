@@ -54,9 +54,14 @@ const putMedia = async (req, res) => {
 };
 
 const deleteMedia = async (req, res) => {
-  const result = await removeMedia(req.params.id);
-  if (result) {
-    res.json({message: "Item deleted successfully"});
+  const media = await findMediaById(req.params.id);
+  if (media) {
+    const result = await removeMedia(req.params.id);
+    if (result) {
+      res.json({message: "Item deleted successfully"});
+    } else {
+      res.status(404);
+    }
   } else {
     res.sendStatus(404);
   }

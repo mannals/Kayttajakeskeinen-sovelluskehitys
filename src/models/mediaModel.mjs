@@ -44,7 +44,7 @@ const updateMedia = async (media) => {
   try {
     const rows = await promisePool.query(sql, params);
     console.log('rows', rows);
-    return rows[0];
+    return "Updating successful";
   } catch (e) {
     console.error('error', e.message);
     return {error: e.message};

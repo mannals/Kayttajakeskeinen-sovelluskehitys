@@ -52,10 +52,10 @@ const updateUser = async (user) => {
 
 const removeUser = async (id) => {
     try {
-        const sql = [`DELETE FROM Ratings WHERE user_id = ${id};`, `DELETE FROM Likes WHERE user_id = ${id};`, `DELETE FROM Comments WHERE user_id = ${id};`, `DELETE FROM MediaItems WHERE user_id = ${id};`, `DELETE FROM Users WHERE user_id = ${id};`];
+        const sql = [`DELETE FROM Ratings WHERE user_id = ${id};`, `DELETE FROM Likes WHERE user_id = ${id};`, `DELETE FROM Likes WHERE media_id IN (2, 3);`, `DELETE FROM Comments WHERE user_id = ${id};`, `DELETE FROM Comments WHERE media_id = 2;`, `DELETE FROM MediaItemTags WHERE media_id IN (2, 3);`, `DELETE FROM Ratings WHERE media_id = 2;`, `DELETE FROM MediaItems WHERE user_id = ${id};`, `DELETE FROM Users WHERE user_id = ${id};`];
         const [rows] = [];
         for (let line of sql) {
-        await promisePool.query(line);
+            await promisePool.query(line);
         }
         console.log('rows', rows);
         return 'Deleted successfully';

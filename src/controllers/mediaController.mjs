@@ -21,8 +21,9 @@ const getMediaById = async (req, res) => {
 
 const postMedia = async (req, res) => {
   try {
+    const {title, description} = req.body;
     const {filename, size, mimetype} = req.file;
-    const {title, description, user_id} = req.body;
+    const user_id = req.user.user_id;
     if (filename && title && user_id) {
       const result = await addMedia({filename, size, mimetype, title, description, user_id});
       if (result.media_id) {

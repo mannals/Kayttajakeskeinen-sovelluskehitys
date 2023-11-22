@@ -1,6 +1,16 @@
 # Media sharing api http test requests
 
-## /api/media endpoit
+## /api/auth endpoint
+
+POST http://localhost:3000/api/auth/login
+content-type: application/json
+
+{
+  "username": "JohnDoe",
+  "password": "to-be-hashed-pw1"
+}
+
+## /api/media endpoint
 
 ### Get all media
 GET http://localhost:3000/api/media
@@ -110,7 +120,7 @@ DELETE http://localhost:3000/api/users/2
 
 ### Get likes of media file
 
-GET http://localhost:3000/api/likes/media/2
+GET http://localhost:3000/api/likes/media/3
 
 ### Get likes of user
 

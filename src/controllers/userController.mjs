@@ -1,4 +1,16 @@
+import { validationResult } from "express-validator";
 import { listAllUsers, findUserById, addUser, updateUser, removeUser } from "../models/userModel.mjs";
+
+const postUser = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.log(errors.array());
+        return res.status(400).json({message: 'validation error'});
+    }
+    const newUserId = await addUser(req.body);
+    res.status(201).json({message: 'user added', user_id: newUserId});
+};
+
 
 const getUsers = async (req, res) => {
   const result = await listAllUsers();
@@ -17,22 +29,6 @@ const getUserById = async (req, res) => {
         res.json(user);
     } else {
         res.sendStatus(404);
-    }
-};
-
-const postUser = async (req, res) => {
-    const {username, password, email} = req.body;
-    if (username && password && email) {
-        const result = await addUser({username, password, email});
-        if (result.user_id) {
-            res.status(201);
-            res.json({message: 'New user added.', ...result});
-        } else {
-            res.status(500);
-            res.json(result);
-        }
-    } else {
-        res.sendStatus(400);
     }
 };
 

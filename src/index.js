@@ -4,7 +4,7 @@ import {fileURLToPath} from 'url';
 import mediaRouter from './routers/mediaRouter.mjs';
 import userRouter from './routers/userRouter.mjs';
 import likeRouter from './routers/likeRouter.mjs';
-import { logger } from './middlewares/middlewares.mjs';
+import { errorHandler, logger, notFoundHandler } from './middlewares/middlewares.mjs';
 import authRouter from './routers/authRouter.mjs';
 
 const hostname = '127.0.0.1';
@@ -16,6 +16,8 @@ const __dirname = path.dirname(__filename);
 
 app.set('view engine', 'pug');
 app.set('views', 'src/views');
+
+app.disable('x-powered-by');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
@@ -34,15 +36,13 @@ app.get('/', (req, res) => {
   res.render('home', values);
 });
 
-app.get('/:message', (req, res) => {
-  const values = {title: "Getting Started with Node.js", message: req.params.message};
-  res.render('home', values);
-});
-
 app.use('/api/media', mediaRouter);
 app.use('/api/users', userRouter);
 app.use('/api/likes', likeRouter);
 app.use('/api/auth', authRouter);
+
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 app.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);

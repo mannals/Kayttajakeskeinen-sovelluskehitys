@@ -38,13 +38,15 @@ const addMedia = async (media) => {
 };
 
 const updateMedia = async (media) => {
-  const {media_id, filename, title, description} = media;
-  const sql = `UPDATE MediaItems SET filename = ?, title = ?, description = ? WHERE media_id = ?`;
-  const params = [filename, title, description, media_id];
+  const {user_id, media_id, filename, title, description} = media;
+  const sql = `SELECT user_id FROM MediaItems WHERE media_id = ?`;
+  const params = media_id;
   try {
-    const rows = await promisePool.query(sql, params);
-    console.log('rows', rows);
-    return "Updating successful";
+    const uid = await promisePool.query(sql, params);
+    if (rows) {
+      console.log('rows', rows);
+      
+    }
   } catch (e) {
     console.error('error', e.message);
     return {error: e.message};

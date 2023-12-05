@@ -1,17 +1,18 @@
 import promisePool from "../utils/database.mjs";
+import bcrypt from "bcryptjs";
 
 /**
  * Fetch user from database based on usrname/pswd pair
  * @param {object} userCreds - {username, password}
  * @returns user object
  */
-const login = async (username) => {
+const login = async (userCreds) => {
     try {
-        const sql = `SELECT user_id, username, password, email, user_level_id FROM Users WHERE username = ?`;
-        const params = [username];
+        console.log(userCreds);
+        const sql = `SELECT user_id, username, password, email, user_level_id FROM Users WHERE username = ? AND password = ?`;
+        const params = [userCreds.username, userCreds.password];
         const result = await promisePool.query(sql, params);
         const [rows] = result;
-        console.log('login, user found?', rows[0]);
         return rows[0];
     } catch (e) {
         console.error('error', e.message);
@@ -27,15 +28,17 @@ const login = async (username) => {
 */
 const addUser = async (user) => {
     try {
-      const sql = `INSERT INTO Users (username, email, password, user_level_id)
-                  VALUES (?, ?, ?, ?)`;
-      // user level id defaults to 2 (normal user)                 
-      const params = [user.username, user.email, user.password, 2];
-      const result = await promisePool.query(sql, params);
-      return result[0].insertId;
+        const sql = `INSERT INTO Users (username, email, password, user_level_id)
+                    VALUES (?, ?, ?, ?)`;
+        // user level id defaults to 2 (normal user)  
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(user.password, salt);             
+        const params = [user.username, user.email, hashedPassword, 2];
+        const result = await promisePool.query(sql, params);
+        return result[0].insertId;
     } catch (e) {
-      console.error('error', e.message);
-      return {error: e.message};
+        console.error('error', e.message);
+        return {error: e.message};
     }
 };
 
@@ -59,6 +62,17 @@ const findUserById = async (id) => {
         const [rows] = await promisePool.query('SELECT * FROM Users WHERE user_id = ?', [id]);
         console.log('rows', rows);
         return rows[0];
+    } catch (e) {
+        console.error('error', e.message);
+        return {error: e.message};
+    }
+};
+
+const findUserByName = async (username) => {
+    try {
+        const [rows] = await promisePool.query('SELECT password FROM Users WHERE username = ?', [username]);
+        console.log('rows', rows);
+        return rows[0].password;
     } catch (e) {
         console.error('error', e.message);
         return {error: e.message};
@@ -95,4 +109,4 @@ const removeUser = async (id) => {
     
 };
 
-export {login, listAllUsers, findUserById, addUser, updateUser, removeUser};
+export {login, listAllUsers, findUserById, findUserByName, addUser, updateUser, removeUser};

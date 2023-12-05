@@ -1,6 +1,7 @@
 import express from 'express';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import helmet from 'helmet';
 import mediaRouter from './routers/mediaRouter.mjs';
 import userRouter from './routers/userRouter.mjs';
 import likeRouter from './routers/likeRouter.mjs';
@@ -25,6 +26,7 @@ app.use('/docs', express.static(path.join(__dirname, '../docs')));
 app.use('/media', express.static(path.join(__dirname, '../uploads')));
 
 app.use(logger);
+app.use(helmet());
 
 app.use((req, res, next) => {
   console.log('Time: ', Date.now(), req.method, req.url);

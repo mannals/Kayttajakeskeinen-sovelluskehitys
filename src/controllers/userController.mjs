@@ -9,7 +9,9 @@ const postUser = async (req, res, next) => {
         error.status = 400;
         return next(error);
     }
-    const newUserId = await addUser(req.body);
+    const newUser = req.body;
+    console.log(typeof newUser.password);
+    const newUserId = await addUser(newUser);
     res.status(201).json({message: 'user added', user_id: newUserId});
 };
 

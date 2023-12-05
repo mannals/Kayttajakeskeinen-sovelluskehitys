@@ -11,8 +11,8 @@ POST http://localhost:3000/api/auth/login
 content-type: application/json
 
 {
-  "username": "JohnDoe",
-  "password": "to-be-hashed-pw1"
+  "username": "wrsgohsd",
+  "password": "nurosfhoh"
 }
 
 ### GET my user info

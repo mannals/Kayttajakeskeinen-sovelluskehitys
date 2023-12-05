@@ -15,6 +15,20 @@ const mediaRouter = express.Router();
 
 mediaRouter.use(logger);
 
+/**
+ * @apiDefine all No authentication needed.
+ * 
+ * @apiError UnauthorizedError User name or password invalid.
+ * @apiErrorExample Error-Response:
+ *  HTTP/1.1 403 Forbidden
+ * {
+ * "error": {
+ * "message": "username/password invalid",
+ * "status": 401
+ * }
+ * }
+ * 
+ */
 mediaRouter
   .route("/")
   .get(getMedia)
@@ -24,7 +38,30 @@ mediaRouter
     body("title").trim().isLength({min: 3}),
     body("description"),
     postMedia
-  );
+);
+
+/**
+ * @apiDefine token Logged in user access only
+ * Valid authentication token must be provided within request.
+ * 
+ * @apiHeader {String} Authorization Authentication token.
+ * 
+ * @apiHeaderExample {json} Header-Example:
+ *  {
+ * 
+ * }
+ * 
+ * @apiError UnauthorizedError User name or password invalid.
+ * @apiErrorExample Error-Response:
+ *   HTTP/1.1 403 Forbidden
+ * {
+ * "error": {
+ * "message": "username/password invalid",
+ * "status": 401
+ * }
+ * }
+ * 
+ */
 mediaRouter
   .route("/:id")
   .get(getMediaById)

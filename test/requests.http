@@ -11,14 +11,14 @@ POST http://localhost:3000/api/auth/login
 content-type: application/json
 
 {
-  "username": "wrsgohsd",
-  "password": "nurosfhoh"
+  "username": "JohnDoe",
+  "password": "to-be-hashed-pw1"
 }
 
 ### GET my user info
 
 GET http://localhost:3000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDExNjMyNTR9.g5Obq-32wU_bxwoUWHu9TJZHIPvyOjcBVGfS_om20D0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDE3ODAxMzd9.PE1zmvQKIm_ZWg0vLRFGGPxZLxAXektwMohNJhusqp4
 
 ## /api/media endpoint
 
@@ -91,6 +91,7 @@ content-type: application/json
 
 ### Delete media
 DELETE http://localhost:3000/api/media/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDExNjMyNTR9.g5Obq-32wU_bxwoUWHu9TJZHIPvyOjcBVGfS_om20D0
 
 ## /api/users endpoint
 
@@ -120,7 +121,8 @@ content-type: application/json
 {"msg": "HEllo"}
 
 ### Update user
-PUT http://localhost:3000/api/users/2
+PUT http://localhost:3000/api/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDExNjMyNTR9.g5Obq-32wU_bxwoUWHu9TJZHIPvyOjcBVGfS_om20D0
 content-type: application/json
 
 {
@@ -131,14 +133,17 @@ content-type: application/json
 
 ### Update users FAIL
 PUT http://localhost:3000/api/users/340
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDExNjMyNTR9.g5Obq-32wU_bxwoUWHu9TJZHIPvyOjcBVGfS_om20D0
 content-type: application/json
 
 {
-  "something": "this will fail",
+  "something": "this will fail"
 }
 
 ### Delete users
-DELETE http://localhost:3000/api/users/2
+DELETE http://localhost:3000/api/users/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDExNjMyNTR9.g5Obq-32wU_bxwoUWHu9TJZHIPvyOjcBVGfS_om20D0
+
 
 
 ### /api/likes endpoint
@@ -163,5 +168,15 @@ content-type: application/json
 
 ### Delete like
 
-DELETE http://localhost:3000/api/likes/7
+DELETE http://localhost:3000/api/likes/2
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6IkpvaG5Eb2UiLCJlbWFpbCI6ImpvaG5kb2VAZXhhbXBsZS5jb20iLCJ1c2VyX2xldmVsX2lkIjoyLCJpYXQiOjE3MDExNjMyNTR9.g5Obq-32wU_bxwoUWHu9TJZHIPvyOjcBVGfS_om20D0
+
+### dumb errors
+
+POST http://localhost:3000/api/users
+
+### empty media
+
+POST http://localhost:3000/api/media
+
 

@@ -8,6 +8,7 @@ import {
 } from "../controllers/userController.mjs";
 import { logger } from "../middlewares/middlewares.mjs";
 import { body } from "express-validator";
+import { authenticateToken } from "../middlewares/authentication.mjs";
 
 const userRouter = express.Router();
 
@@ -23,6 +24,10 @@ userRouter
     postUser
   );
 
-userRouter.route("/:id").get(getUserById).put(putUser).delete(deleteUser);
+userRouter
+  .route("/:id")
+  .get(getUserById)
+  .put(authenticateToken, putUser)
+  .delete(authenticateToken, deleteUser);
 
 export default userRouter;

@@ -39,13 +39,19 @@ const addMedia = async (media) => {
 
 const updateMedia = async (media) => {
   const {user_id, media_id, filename, title, description} = media;
-  const sql = `SELECT user_id FROM MediaItems WHERE media_id = ?`;
-  const params = media_id;
+  let sql = `SELECT user_id FROM MediaItems WHERE media_id = ?`;
+  let params = media_id;
   try {
     const uid = await promisePool.query(sql, params);
-    if (rows) {
-      console.log('rows', rows);
-      
+    console.log('user id', uid[0][0].user_id);
+    if (uid[0][0].user_id === user_id) {
+      sql = `UPDATE MediaItems SET filename = ?, title = ?, description = ? WHERE media_id = ?`;
+      params = [filename, title, description, media_id];
+      const rows = await promisePool.query(sql, params);
+      console.log(rows);
+      return {message: 'update successful'}
+    } else {
+      return {error: 'unauthorized'};
     }
   } catch (e) {
     console.error('error', e.message);
@@ -60,8 +66,7 @@ const removeMedia = async (id) => {
     for (let line of sql) {
       await promisePool.query(line);
     }
-    console.log('rows', rows);
-    return 'Deleted successfully';
+    return {message: 'Deleted successfully'};
   } catch (e) {
     console.error('error', e.message);
     return {error: e.message};

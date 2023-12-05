@@ -13,12 +13,11 @@ const postLogin = async (req, res, next) => {
     }
 
     if (user.error) {
-        return next(new Error(result.error));
+        return next(new Error(res.error));
     }
 
     console.log('postLogin', user);
-    const match = await bcrypt.compare(req.body.password, user.password);
-    if (match) {
+    if (user) {
         delete user.password;
         const token = jwt.sign(user, process.env.JWT_SECRET);
         res.json({message: 'logged in', token, user});

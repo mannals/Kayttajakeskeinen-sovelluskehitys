@@ -39,6 +39,10 @@ const addUser = async (user) => {
     }
 };
 
+/**
+ * 
+ * @returns array or error object
+ */
 const listAllUsers = async () => {
     try {
         const [rows] = await promisePool.query('SELECT * FROM Users');

@@ -12,7 +12,7 @@ const upload = multer({
         cb(null, true);
       } else {
         // reject file
-        const error = new Error('file missing or invalid');
+        const error = new Error('only images and videos are allowed!');
         error.status = 400;
         cb(error, false);
       }

@@ -1,24 +1,28 @@
 import { getLikesByMedia, getLikesByUser, getSpecificLike, addLike, removeLike } from "../models/likeModel.mjs";
 
-const getMediaLikes = async (req, res) => {
+const getMediaLikes = async (req, res, next) => {
     const result = await getLikesByMedia(req.params.id);
     if (result) {
         res.json(result);
     } else {
-        res.sendStatus(404);
+        const error = new Error('like not found');
+        error.status = 404;
+        return next(error);
     }
 };
 
-const getUserLikes = async (req, res) => {
+const getUserLikes = async (req, res, next) => {
     const result = await getLikesByUser(req.params.id);
     if (result) {
         res.json(result);
     } else {
-        res.sendStatus(404);
+        const error = new Error('like not found');
+        error.status = 404;
+        return next(error);
     }
 };
 
-const postLike = async (req, res) => {
+const postLike = async (req, res, next) => {
     const {media_id, user_id} = req.body;
     if (media_id && user_id) {
         const result = await addLike({media_id, user_id});
@@ -26,25 +30,38 @@ const postLike = async (req, res) => {
             res.status(201);
             res.json({message: 'New like added.', ...result});
         } else {
-            res.status(500);
-            res.json(result);
+            const error = new Error("could not add like");
+            error.status = 400;
+            return next(error);
         }
     } else {
-        res.sendStatus(400);
+        const error = new Error("invalid or missing fields");
+        error.status = 400;
+        return next(error);
     }
 };
 
-const deleteLike = async (req, res) => {
+const deleteLike = async (req, res, next) => {
     const like = await getSpecificLike(req.params.id);
-    if (like) {
+    if (!like) {
+        const error = new Error("like not found");
+        error.status = 400;
+        return next(error);
+    }
+    console.log(like);
+    if (like.user_id === req.user.user_id) {
         const result = await removeLike(req.params.id);
         if (result) {
             res.json({message: "Like deleted successfully"});
         } else {
-            res.status(404);
+            const error = new Error("could not delete like");
+            error.status = 404;
+            return next(error);
         }
     } else {
-        res.sendStatus(404);
+        const error = new Error("like not found");
+        error.status = 404;
+        return next(error);
     }
 };
 
